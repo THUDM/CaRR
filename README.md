@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![GitHub](https://img.shields.io/github/stars/THUDM/CaRR?style=social)](https://github.com/THUDM/CaRR)
+[![GitHub](https://img.shields.io/github/stars/THUDM/CaRR)](https://github.com/THUDM/CaRR)
 [![arXiv](https://img.shields.io/badge/arXiv-xxxx.xxxxx-b31b1b.svg)](https://arxiv.org/pdf/xxxx.xxxxx)
 [![Dataset](https://img.shields.io/badge/🤗%20Dataset-CaRR--DeepDive-blueviolet)](https://huggingface.co/datasets/THU-KEG/CaRR-DeepDive)
 
