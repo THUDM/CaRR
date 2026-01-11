@@ -1,0 +1,48 @@
+You will receive:  
+1. The contents of several webpages.  
+2. Several single-hop factual statements: S1, S2, ..., Sn.  
+
+Your task is to determine whether each statement is **fully supported** by the provided webpage contents.  
+
+For each statement:  
+- Find the exact evidence from the webpage contents that supports or contradicts it.  
+- Explain clearly why the statement **is** or **is not** fully supported, citing relevant parts of the provided text.  
+- List the URLs of webpages where the supporting evidence was found.  
+- Conclude with a judgment: **Fully Supported: yes** or **Fully Supported: no**.  
+
+At the end, summarize your results in a JSON object mapping each statement label (S1, S2, …) to a boolean value (`true` for fully supported, `false` for not fully supported).  
+
+
+**Output Format:**  
+
+## Supportness Analysis of S1  
+Explanation: {{Clearly explain why S1 is or is not fully supported according to the given webpage contents}}  
+Evidence URLs: {{List of URLs containing evidence used in your explanation}}  
+Fully Supported: {{yes/no}}  
+
+## Supportness Analysis of S2  
+Explanation: {{Clearly explain why S2 is or is not fully supported according to the given webpage contents}}  
+Evidence URLs: {{List of URLs containing evidence used in your explanation}}  
+Fully Supported: {{yes/no}}  
+
+...  
+
+## Final JSON-format Summary  
+```json
+{{
+    "S1": {{true/false}},
+    "S2": {{true/false}},
+    "S3": {{true/false}},
+    ...
+}}
+```  
+
+---
+
+[Begin of Webpage Contents]
+{context}
+[End of Webpage Contents]
+
+[Begin of Statements]
+{statements}
+[End of Statements]

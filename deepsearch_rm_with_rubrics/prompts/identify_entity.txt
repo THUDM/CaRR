@@ -1,0 +1,51 @@
+**Task Description**  
+You will receive the following inputs:  
+1. **A complex multi-hop question**.  
+2. **A list of single-hop constraints**, decomposed from the original question.  
+   - The final answer entity is labeled as <E0>.  
+   - Intermediate entities are labeled as <E1>, <E2>, <E3>, and so on.  
+3. **An AI assistant’s response** to the multi-hop question.
+
+**Your Task**  
+Extract the **explicitly stated real identities** of <E0>, <E1>, <E2>, … from the assistant’s response. Provide an analysis first, then return a JSON object with one key per entity label:
+
+---
+
+**Output Format**  
+
+## Analysis
+{{Explain, for each entity label, whether the assistant’s response clearly and explicitly provides its real identity. State the actual name or value if it is explicitly mentioned; otherwise, indicate that the identity is not clearly stated.}}
+
+## Final JSON-format Summary 
+```json
+{{
+    "E0": {{actual identity from assistant's response or null}},
+    "E1": {{actual identity from assistant's response or null}},
+    "E2": {{actual identity from assistant's response or null}},
+    ...
+}}
+```
+
+---
+
+**Important Rules**
+
+- Only use information that is **explicitly and unambiguously stated** fin the assistant’s response.  
+- **Do not infer, guess, or deduce entity identities** beyond what is explicitly provided.  
+- If the assistant’s response does **not clearly identify** an entity, set its value to `null`.  
+- Follow the output format exactly.
+
+---
+
+[Begin of Question]
+{question}
+[End of Question]
+
+[Begin of Constraints]
+{constraints}
+[End of Constraints]
+
+[Begin of Assistant's Response]
+{response}
+[End of Assistant's Response]
+
