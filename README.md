@@ -3,7 +3,7 @@
 <div align="center">
 
 [![GitHub](https://img.shields.io/github/stars/THUDM/CaRR)](https://github.com/THUDM/CaRR)
-[![arXiv](https://img.shields.io/badge/arXiv-xxxx.xxxxx-b31b1b.svg)](https://arxiv.org/pdf/xxxx.xxxxx)
+[![arXiv](https://img.shields.io/badge/arXiv-2601.06021-b31b1b.svg)](https://arxiv.org/pdf/2601.06021)
 [![Dataset](https://img.shields.io/badge/🤗%20Dataset-CaRR--DeepDive-blueviolet)](https://huggingface.co/datasets/THU-KEG/CaRR-DeepDive)
 
 </div>
@@ -105,10 +105,10 @@ If you find our work useful, please consider citing:
       title={Chaining the Evidence: Robust Reinforcement Learning for Deep Search Agents with Citation-Aware Rubric Rewards},
       author={Jiajie Zhang and Xin Lv and Ling Feng and Lei Hou and Juanzi Li},
       year={2025},
-      eprint={xxxx.xxxxx},
+      eprint={2601.06021},
       archivePrefix={arXiv},
       primaryClass={cs.CL},
-      url={https://arxiv.org/abs/xxxx.xxxxx},
+      url={https://arxiv.org/abs/2601.06021},
 }
 ```
 
