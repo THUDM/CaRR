@@ -4,7 +4,7 @@
 
 [![GitHub](https://img.shields.io/github/stars/THUDM/CaRR)](https://github.com/THUDM/CaRR)
 [![arXiv](https://img.shields.io/badge/arXiv-2601.06021-b31b1b.svg)](https://arxiv.org/pdf/2601.06021)
-[![Dataset](https://img.shields.io/badge/🤗%20Dataset-CaRR--DeepDive-blueviolet)](https://huggingface.co/datasets/THU-KEG/CaRR-DeepDive)
+[![Dataset & Model](https://img.shields.io/badge/🤗%20HuggingFace-CaRR%26C--GRPO-green)](https://huggingface.co/collections/THU-KEG/carr-and-c-grpo)
 
 </div>
 
@@ -15,7 +15,9 @@
 
 ## 🔥 News
 
-- **[2026/01/11]** Our **SFT trajectories** and **RL QA pairs with rubrics** have been fully open-sourced on [Hugging Face Dataset CaRR-DeepDive](https://huggingface.co/datasets/THU-KEG/CaRR-DeepDive).
+- **[2026/03/12]** Our **SFT models** and **C-GRPO models** have been fully open-sourced on [Hugging Face](https://huggingface.co/datasets/THU-KEG/CaRR-DeepDive).
+
+- **[2026/01/11]** Our **SFT trajectories** and **RL QA pairs with rubrics** have been fully open-sourced on [Hugging Face](https://huggingface.co/collections/THU-KEG/carr-and-c-grpo).
 - **[2026/01/11]** Released the **CaRR** framework, implemented as a remote reward model server — now fully available in [`./deepsearch_rm_with_rubrics`](https://github.com/THUDM/CaRR/tree/main/deepsearch_rm_with_rubrics).
 - Model and training code are currently being organized – coming soon!
 
