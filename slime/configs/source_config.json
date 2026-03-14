@@ -1,0 +1,43 @@
+{
+  "deepsearch_with_browser": {
+    "message_processor": {
+      "class": "slime.rollout.message_processor_hub.qwen3_message_processor_skip_illform.Qwen3MessageProcessor"
+    },
+    "reward_model": {
+      "function": "remote_rm",
+      "kwargs": {
+        "remote_url": "http://localhost:8888/evaluate",
+        "input_keys": [
+          "history",
+          "label",
+          "task_unfinished",
+          "remote_env_info"
+        ]
+      }
+    },
+    "remote_environment": {
+      "url": "http://localhost:7230",
+      "max_steps": 100
+    }
+  },
+  "deepsearch_with_browser_eval": {
+    "message_processor": {
+      "class": "slime.rollout.message_processor_hub.qwen3_message_processor_skip_illform.Qwen3MessageProcessor"
+    },
+    "reward_model": {
+      "function": "remote_rm",
+      "kwargs": {
+        "remote_url": "http://localhost:6759/evaluate",
+        "input_keys": [
+          "history",
+          "label",
+          "task_unfinished",
+          "remote_env_info"
+        ]
+      }
+    },
+    "remote_environment": {
+      "url": "http://localhost:7230"
+    }
+  }
+}

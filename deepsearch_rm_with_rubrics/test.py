@@ -2,7 +2,7 @@ import requests
 import json
 import time
 
-js = json.load(open("/mnt/o1_alicloud/personal/zjj/dev/dr-rubric/deepsearch_rm_with_rubrics/4b_bc_examples.json"))[0]
+js = json.load(open("./deepsearch_rm_with_rubrics/browsecomp_example.json"))[0]
 history = js["history"][0]
 question = history[0]["content"].split("\n\nYour response should be")[0]
 label = js["label"][0]
@@ -24,7 +24,7 @@ data = {
 
 start_time = time.time()
 try:
-    resp = requests.post("http://127.0.0.1:8888/evaluate", json=data)
+    resp = requests.post("http://172.27.7.147:8888/evaluate", json=data)
     print("Status Code:", resp.status_code)
     print("Response:")
     print(resp.json())

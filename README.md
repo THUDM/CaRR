@@ -15,6 +15,8 @@
 
 ## 🔥 News
 
+- **[2026/03/14]** Our **RL training and evaluation code** have been fully open-sourced.
+
 - **[2026/03/12]** Our **SFT models** and **C-GRPO models** have been fully open-sourced on [Hugging Face](https://huggingface.co/datasets/THU-KEG/CaRR-DeepDive).
 
 - **[2026/01/11]** Our **SFT trajectories** and **RL QA pairs with rubrics** have been fully open-sourced on [Hugging Face](https://huggingface.co/collections/THU-KEG/carr-and-c-grpo).
@@ -86,6 +88,177 @@ C-GRPO agents also generalize well to open-ended deep research tasks:
 <img src="./assets/deep_research_bench_performance.png" alt="C-GRPO" width="50%">
 <p><em></em></p>
 </div>
+
+## Environment Preparation
+
+### Step 0) Pull Slime Docker image
+
+Recommended image (from `slime/docker/version.txt`):
+
+```bash
+docker pull slimerl/slime:nightly-dev-20260311a
+```
+
+### Step 1) Generate and fill environment variables
+
+```bash
+bash scripts/setup/prepare_env.sh
+```
+
+Edit `.env` and fill at least the following fields:
+
+- Workspace paths: `CARR_ROOT`, `SLIME_ROOT`
+- Tool Server: `SERP_API_KEY`, `JINA_API_KEY`, `TOOL_SERVER_PORT`
+- Training RM: `DEEPSEEK_API_KEY`, `DEEPSEEK_BASE_URL`, `RM_TRAIN_PORT`
+- Evaluation RM: `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `RM_EVAL_PORT`
+- Data encryption/decryption: `EVAL_DATA_PASSWORD`
+- Optional proxy: `HTTP_PROXY`, `HTTPS_PROXY`
+
+### Step 2) Start Tool Server
+
+```bash
+bash scripts/setup/start_tool_server.sh
+```
+
+Script configuration:
+
+- Reads: `SERP_API_KEY`, `JINA_API_KEY`, `TOOL_SERVER_PORT`
+- Optional: `HTTP_PROXY` (automatically applied when non-empty)
+- Working directory: `${CARR_ROOT}/tool_server`
+
+Recommended health check after startup:
+
+```bash
+curl -sS http://127.0.0.1:${TOOL_SERVER_PORT:-7230}/ \
+  -X POST \
+  -H 'Content-Type: application/json' \
+  -d '{"session_id":"health","name":"start_session","arguments":{},"remote_env_info":null}'
+```
+
+### Step 3) Start training RM server (deepseek-chat)
+
+```bash
+bash scripts/setup/start_rm_deepseek.sh
+```
+
+Script configuration:
+
+- Reads: `RM_TRAIN_PORT`, `DEEPSEEK_BASE_URL`, `DEEPSEEK_API_KEY`
+- Model: `deepseek-chat`
+- Working directory: `${CARR_ROOT}/deepsearch_rm_with_rubrics`
+
+### Step 4) Start evaluation RM server (gpt-5-chat)
+
+```bash
+bash scripts/setup/evaluation_start_rm_gpt5.sh
+```
+
+Script configuration:
+
+- Reads: `RM_EVAL_PORT`, `OPENAI_BASE_URL`, `OPENAI_API_KEY`
+- Model: `gpt-5-chat-2025-08-07`
+- Working directory: `${CARR_ROOT}/deepsearch_rm_with_rubrics`
+
+### Step 5) Prepare and decrypt evaluation datasets
+
+Dataset locations:
+
+- Encrypted files: `data/eval/*.jsonl.enc`
+- Decrypted files: `data/eval_decrypted/*.jsonl`
+
+Before training or evaluation, decrypt datasets:
+
+```bash
+bash scripts/setup/decrypt_eval_data.sh
+```
+
+Script configuration:
+
+- `decrypt_eval_data.sh`: reads `EVAL_DATA_PASSWORD`, decrypts `data/eval/*.enc` into `data/eval_decrypted/*.jsonl`
+
+## Training
+
+### Step 1) Convert 4B checkpoint (HF -> torch_dist)
+
+```bash
+bash scripts/setup/convert_4b.sh
+```
+
+Script configuration:
+
+- Reads: `SLIME_ROOT` (defaults to `${CARR_ROOT}/slime` if unset)
+- Runs conversion command directly in `slime/tools/convert_hf_to_torch_dist.py`
+
+### Step 2) Convert 30B checkpoint (HF -> torch_dist)
+
+```bash
+bash scripts/setup/convert_30b.sh
+```
+
+Script configuration:
+
+- Reads: `SLIME_ROOT`
+- Runs conversion command directly in `slime/tools/convert_hf_to_torch_dist.py`
+
+### Step 3) Launch 4B training
+
+```bash
+bash scripts/training/training_run_4b-C-GRPO-rubric0.3.sh
+```
+
+Script configuration:
+
+- Reads: `SLIME_ROOT`
+- Run `bash scripts/setup/decrypt_eval_data.sh` once before training/evaluation
+- Evaluation data source during training: `data/eval_decrypted/` (filenames without `-browser-oss`)
+
+### Step 4) Launch 30B training
+
+```bash
+bash scripts/training/training_run_30b-C-GRPO-rubric0.3.sh
+```
+
+Script configuration:
+
+- Reads: `SLIME_ROOT`
+- Run `bash scripts/setup/decrypt_eval_data.sh` once before training/evaluation
+- Evaluation data source during training: `data/eval_decrypted/` (filenames without `-browser-oss`)
+
+## Evaluation
+
+### Step 1) Run 4B evaluation
+
+```bash
+bash scripts/eval/evaluation_run_4b.sh
+```
+
+Script configuration:
+
+- Reads: `SLIME_ROOT`
+- Reads `data/eval_decrypted/*.jsonl` (decrypt once in setup stage)
+
+### Step 2) Run 30B evaluation
+
+```bash
+bash scripts/eval/evaluation_run_30b.sh
+```
+
+Script configuration:
+
+- Reads: `SLIME_ROOT`
+- Reads `data/eval_decrypted/*.jsonl` (decrypt once in setup stage)
+
+### Recommended execution order
+
+1. `prepare_env.sh`
+2. `start_tool_server.sh`
+3. `start_rm_deepseek.sh`
+4. `evaluation_start_rm_gpt5.sh`
+5. `decrypt_eval_data.sh` (in `scripts/setup/`)
+6. `convert_4b.sh` (in `scripts/setup/`)
+7. `convert_30b.sh` (in `scripts/setup/`)
+8. `training_run_4b-C-GRPO-rubric0.3.sh` / `training_run_30b-C-GRPO-rubric0.3.sh`
+9. `evaluation_run_4b.sh` / `evaluation_run_30b.sh`
 
 ---
 
