@@ -1,4 +1,4 @@
-# Chaining the Evidence: Robust Reinforcement Learning for Deep Search Agents with Citation-Aware Rubric Rewards
+# [ACL 2026] Chaining the Evidence: Robust Reinforcement Learning for Deep Search Agents with Citation-Aware Rubric Rewards
 
 <div align="center">
 
@@ -14,6 +14,8 @@
 </div>
 
 ## 🔥 News
+
+- **[2026/04/08]** Our paper has been accepted by **ACL 2026**!
 
 - **[2026/03/14]** Our **RL training and evaluation code** have been fully open-sourced.
 
